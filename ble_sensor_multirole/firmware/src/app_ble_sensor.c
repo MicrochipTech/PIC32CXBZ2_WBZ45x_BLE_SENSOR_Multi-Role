@@ -111,9 +111,18 @@ void update_touch_data(void)
 {
     unsigned int r,g,b, rgb_ble_data = 0;
     HSV2RGB(bleSensorData.RGB_color.Hue,bleSensorData.RGB_color.Saturation,bleSensorData.RGB_color.Value,&r,&g,&b);
+    
+#if defined SLIDER_TABLE_8
     r = (r>>0x0D)+1;
     g = (g>>0x0D)+1;
     b = (b>>0x0D)+1;
+#elif defined SLIDER_TABLE_4
+    r = (r>>0x0E)+1;
+    g = (g>>0x0E)+1;
+    b = (b>>0x0E)+1;
+#endif
+    
+
     rgb_ble_data=((r<<12)|(g<<8)|(b<<4));
     if(bleSensorData.rgbOnOffStatus == LED_ON)
     {

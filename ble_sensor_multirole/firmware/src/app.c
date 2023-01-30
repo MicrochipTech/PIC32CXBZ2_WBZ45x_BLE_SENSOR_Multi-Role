@@ -85,6 +85,7 @@
 #define TOUCH_DATA_BUTTON_POS       0
 #define TOUCH_DATA_CR_POS           4
 #define TOUCH_DATA_NL_POS           5
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data Definitions
@@ -111,8 +112,13 @@ APP_DATA appData;
 SYS_CONSOLE_HANDLE touchDevConsoleHandle;
 SYS_CONSOLE_HANDLE uartConsoleHandle;
 
+#if defined SLIDER_TABLE_8
 uint8_t slider_table[9] = {0,0,36,73,109,146,182,219,255};
-
+#elif defined SLIDER_TABLE_4
+uint8_t slider_table[5] = {0,0,36,109,255};
+#else
+#error "SLIDER_TABLE not defined"
+#endif
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Callback Functions
