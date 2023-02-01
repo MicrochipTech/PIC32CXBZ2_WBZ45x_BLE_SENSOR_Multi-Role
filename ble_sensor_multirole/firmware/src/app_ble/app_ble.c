@@ -224,11 +224,7 @@ void APP_BleConfigBasic()
         // Configure device address
         BLE_GAP_SetDeviceAddr(&devAddr);
     }
-
-    // Configure device address
-    BLE_GAP_SetDeviceAddr(&devAddr);
-    
-    
+   
     memset(&advParam, 0, sizeof(BLE_GAP_AdvParams_T));
     advParam.intervalMin = 512;     /* Advertising Interval Min */
     advParam.intervalMax = 512;     /* Advertising Interval Max */

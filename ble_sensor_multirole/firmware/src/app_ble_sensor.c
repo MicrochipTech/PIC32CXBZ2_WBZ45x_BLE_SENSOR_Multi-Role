@@ -205,7 +205,8 @@ static void APP_TRPS_Sensor_Button_Callback(uintptr_t context)
 /* BLE Sensor LED on/off control through on board button */
 void APP_TRPS_Sensor_Button_Handler(void)
 {
-    b_button_debounce = false;    
+    b_button_debounce = false; 
+    uint16_t result;
 
     if ( APP_GetBleState() == APP_BLE_STATE_CONNECTED)
     {
@@ -218,8 +219,15 @@ void APP_TRPS_Sensor_Button_Handler(void)
         if(APP_GetConnectedDevice_Count() < (BLE_GAP_MAX_LINK_NBR-1) )
         {
             BLE_GAP_SetScanningEnable(false, BLE_GAP_SCAN_FD_DISABLE, BLE_GAP_SCAN_MODE_GENERAL_DISCOVERY, 0);
-            SYS_CONSOLE_PRINT("Scanning Started: %d - Adv Stopped\r\n", APP_GetConnectedDevice_Count());
-            BLE_GAP_SetScanningEnable(true, BLE_GAP_SCAN_FD_DISABLE, BLE_GAP_SCAN_MODE_GENERAL_DISCOVERY, 1800);
+            result = BLE_GAP_SetScanningEnable(true, BLE_GAP_SCAN_FD_DISABLE, BLE_GAP_SCAN_MODE_GENERAL_DISCOVERY, 1800);
+            if(result == APP_RES_SUCCESS )
+            {
+                SYS_CONSOLE_PRINT("Scanning Started\r\n Device Count: %d\r\nAdv Stopped\r\n", APP_GetConnectedDevice_Count());
+            }
+            else
+            {
+                SYS_CONSOLE_PRINT("Scanning Enabled Failed: %d\r\n", result);
+            }
             APP_TIMER_SetTimer(APP_TIMER_ADV_CTRL, APP_TIMER_500MS, true);
         }
         else
