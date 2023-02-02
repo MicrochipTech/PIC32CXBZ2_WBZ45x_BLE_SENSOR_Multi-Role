@@ -34,7 +34,7 @@ Checkout the <a href="https://microchipsupport.force.com/s/" target="_blank">Tec
 
 This application demonstrates the multi-link & multi-role capability of PIC32CXBZ2/WBZ45x device. The PIC32CXBZ2/WBZ45x device allows 6 simultaneous BLE connections.
  
-In this Demo, 'WBZ451 Multi-Role device' act as a central device on startup and scan for [BLE Sensor](https://github.com/Microchip-MPLAB-Harmony/wireless_apps_pic32cxbz2_wbz45) devices nearby. The 'WBZ451 Multi-Role device' initiates connections to 5 [BLE Sensor](https://github.com/Microchip-MPLAB-Harmony/wireless_apps_pic32cxbz2_wbz45) devices.  The 'WBZ451 Multi-Role device' also act a Peripheral device and advertise as a BLE sensor device. The MBD App scans and connect to 'WBZ451 Multi-Role device' and the RGB LED's on all connected devices can be controlled by MBD App. 
+In this Demo, 'WBZ451 Multi-Role device' act as a central device on startup and scan for [BLE Sensor](https://github.com/Microchip-MPLAB-Harmony/wireless_apps_pic32cxbz2_wbz45/tree/master/apps/ble/advanced_applications/ble_sensor) devices nearby. The 'WBZ451 Multi-Role device' initiates connections to 5 [BLE Sensor](https://github.com/Microchip-MPLAB-Harmony/wireless_apps_pic32cxbz2_wbz45/tree/master/apps/ble/advanced_applications/ble_sensor) devices.  The 'WBZ451 Multi-Role device' also act a Peripheral device and advertise as a BLE sensor device. The MBD App scans and connect to 'WBZ451 Multi-Role device' and the RGB LED's on all connected devices can be controlled by MBD App. 
 
 ![](docs/BLE_Multi-Role.png)
 
@@ -114,34 +114,132 @@ The WBZ451 Multi-Role demo application also features a touch interface and a E-P
 
 **Step 1** - Connect the WBZ451 CURIOSITY BOARD to the device/system using a micro-USB cable.
 
-**Step 2** - The project graph of the application is shown below.
+**Step 2** - This application is built by using [BLE Sensor with with ATTINY3217 Touch Application](https://github.com/MicrochipTech/PIC32CXBZ2_WBZ45x_BLE_SENSOR_Touch_ATtiny3217) as the building block. The project graph of the BLE Sensor Multi-Link Multi-Role Demo application is shown below.
 
 ![](Docs/1_project_graph.PNG)
 
+**Step 2** - In MCC harmony project graph, Add the SERCOM1 component under Libraries->Harmony->Peripherals->SERCOM->SERCOM1. select SERCOM1 and add "SPI" satisfiers by right click on the "⬦" near SPI to add the SPI component which will prompt an Auto-activation for "core"&"FreeRTOS" component, give yes to add the component and configure SERCOM1 and SPI as shown below. 
 
+![](docs/sercom_spi.png)
 
+![](docs/2_sercom1.png)
 
+![](docs/3_spi.png)
 
+**Step 3** - In MCC harmony project graph, Update Transparent profile from device resources under Libraries->Harmony->wireless->drivers->BLE->Profiles and configure as shown below.
 
+![](docs/4_transparent_profile.png)
 
+**Step 4** - In MCC harmony project graph, select system and configure as shown below.
 
+![](docs/5_system.PNG)
 
+**Step 5** - In project graph, go to Plugins->Pin configurations->Pin settings and set the pin configuration as shown below.
 
-## 6. Board Programming<a name="step6">
+- Use these PIN Names while configuring.
 
-## Programming hex file:
+```
+CLICK_EINK_BUNDLE_CS
+CLICK_EINK_BUNDLE_DC
+CLICK_EINK_BUNDLE_RST
+CLICK_EINK_BUNDLE_BSY
+```
+
+![](docs/pinsetting.png)
+
+**Step 6** - [Generate](https://onlinedocs.microchip.com/pr/GUID-A5330D3A-9F51-4A26-B71D-8503A493DF9C-en-US-1/index.html?GUID-9C28F407-4879-4174-9963-2CF34161398E) the code.
+
+**Step 7** - Copy the folder click_routines(which contains the eink_bundle.h, eink_bundle_font.h, eink_bundle_image.h, eink_bundle.c,  eink_bundle_font.c, eink_bundle_image.c) to the folder firmware/src under your MPLAB Harmony v3 application project and add the Header (eink_bundle.h, eink_bundle_font.h, eink_bundle_image.h) and Source file (eink_bundle.c, eink_bundle_font.c, eink_bundle_image.c).
+
+- In the project explorer, Right click on folder Header Files and add a sub folder click_routines by selecting “Add Existing Items from Folders…”
+
+![](docs/header_add.png)
+
+- Click on “Add Folder…” button.
+
+![](docs/header_add2.png)
+
+- Select the “click_routines” folder and select “Files of Types” as Header Files.
+
+![](docs/header_add3.png)
+
+- Click on “Add” button to add the selected folder.
+
+![](docs/header_add4.png)
+
+- The eink bundle header files gets added to your project.
+
+![](docs/header_add5.png)
+
+- In the project explorer, Right click on folder Source Files and add a sub folder click_routines by selecting “Add Existing Items from Folders…”.
+
+![](docs/source_add.png)
+
+- Click on “Add Folder…” button
+
+![](docs/source_add2.png)
+
+- Select the “click_routines” folder and select “Files of Types” as Source Files.
+
+![](docs/source_add3.png)
+
+- Click on “Add” button to add the selected folder
+
+![](docs/source_add4.png)
+
+- The eink bundle source files gets added to your project.
+
+![](docs/source_add5.png)
+
+- The click_routines folder contain an C source file eink_bundle.c. You could use eink_bundle.c as a reference to add E-Paper display functionality to your application.
+
+**Step 8** - In "app_user_edits.c", make sure the below code line is commented and make changes as mentioned in TODO section
+
+- "#error User action required - manually edit files as described here".
+
+**Step 9** - Replace the app.c, app_ble_sesnor.c, app_ble_conn_handler.c, app_ble_conn_handler.h, app_trpc.c, app_trpc.h, app_ble.c, app_ble_handler.c and app.h file.
+
+| Note | This application repository should be cloned/downloaded to perform the following steps. |
+| :- | :- |
+| Path | The application folder can be found in the following [link](https://github.com/MicrochipTech/PIC32CXBZ2_WBZ45x_BLE_SENSOR_Multi-Role/tree/main/ble_sensor_multirole/firmware) |
+
+**Step 10** - Clean and build the project. To run the project, select "Make and program device" button.
+
+## 6. ATtiny3217 Touch Application <a name="step6">
+
+- Follow the steps provided under [program the precompiled hex file](https://github.com/MicrochipTech/PIC32CXBZ2_WBZ45x_BLE_SENSOR_Multi-Role#7-board-programming) section to program the ATtiny3217 Xplained Pro and T10 Xplained Pro interface.
+- To create the Atmel Start project from scratch follow steps provided in this [link](https://github.com/MicrochipTech/PIC32CXBZ2_WBZ45x_BLE_SENSOR_Multi-Role/tree/main/ATTiny3217_T10#attiny3217-touch-demo).
+
+## 7. Board Programming<a name="step7">
 
 ### Program the precompiled hex file using MPLAB X IPE
 
-- The Precompiled hex file is given in the hex folder.
+The application hex files can be found by navigating to the following paths: 
+- "PIC32CXBZ2_WBZ45x_BLE_SENSOR_Multi-Role/hex/ble_sensor_multirole.X.production.signed.unified.hex"
+- "PIC32CXBZ2_WBZ45x_BLE_SENSOR_Multi-Role/hex/ATiny3217_T10.hex"
+
+Program five WBZ451 boards with [BLE Sensor Application](https://github.com/Microchip-MPLAB-Harmony/wireless_apps_pic32cxbz2_wbz45/tree/master/apps/ble/advanced_applications/ble_sensor). The application hex files can be found by navigating to the following paths:
+- "wireless_apps_pic32cxbz2_wbz45/apps/ble/advanced_applications/ble_sensor/precompiled_hex/ble_sensor.X.production.signed.unified_timerbased.hex"
+
+| Note: Ensure that all the WBZ451 WBZ451 Curiosity boards have unique BLE MAC Address. If not, program the boards with unique BLE MAC Address.|
+| --- |
+
 Follow the steps provided in the link to [program the precompiled hex file](https://microchipdeveloper.com/ipe:programming-device) using MPLABX IPE to program the pre-compiled hex image. 
 
 ### Build and program the application using MPLAB X IDE
 
-The application folder can be found by navigating to the following path: 
-
-- "PIC32CXBZ2_WBZ45x_BLE_SENSOR_Multi-role\ble_sensor_multirole\firmware\ble_sensor_multirole.X"
+The application folders can be found by navigating to the following paths: 
+- "PIC32CXBZ2_WBZ45x_BLE_SENSOR_Multi-Role/tree/main/ble_sensor_multirole/firmware/ble_sensor_multirole.X"
+- "PIC32CXBZ2_WBZ45x_BLE_SENSOR_Multi-Role/tree/main/ATTiny3217_T10"
 
 Follow the steps provided in the link to [Build and program the application](https://github.com/Microchip-MPLAB-Harmony/wireless_apps_pic32cxbz2_wbz45/tree/master/apps/ble/advanced_applications/ble_sensor#build-and-program-the-application-guid-3d55fb8a-5995-439d-bcd6-deae7e8e78ad-section).
 
-## 7. Run the demo<a name="step7">
+## 8. Run the demo<a name="step8">
+
+- After programming the board, the expected application behavior is shown in the below [video](https://github.com/MicrochipTech/PIC32CXBZ2_WBZ45x_BLE_SENSOR_Multi-Role/blob/main/docs/Working_Demo.gif).
+
+![Alt Text](docs/Working_Demo.gif)
+
+- On Startup the WBZ451 Device will scan for nearby BLE Sensor devices and initiates connection with them. During scanning, the user LED will blink at every 500ms.
+- To switch the device between Advertising and Scanning, press the user button. During Advertising the user LED will blink at every 1000ms.
+- The E-Paper Display will show the temperature of all the connected devices every 60 seconds. 
