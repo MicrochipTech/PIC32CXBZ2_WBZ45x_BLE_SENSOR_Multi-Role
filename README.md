@@ -221,7 +221,7 @@ The application hex files can be found by navigating to the following paths:
 Program five WBZ451 boards with [BLE Sensor Application](https://github.com/Microchip-MPLAB-Harmony/wireless_apps_pic32cxbz2_wbz45/tree/master/apps/ble/advanced_applications/ble_sensor). The application hex files can be found by navigating to the following paths:
 - "wireless_apps_pic32cxbz2_wbz45/apps/ble/advanced_applications/ble_sensor/precompiled_hex/ble_sensor.X.production.signed.unified_timerbased.hex"
 
-| Note: Ensure that all the WBZ451 WBZ451 Curiosity boards have unique BLE MAC Address. If not, program the boards with unique BLE MAC Address.|
+| Note: Ensure that all the WBZ451 Curiosity boards have unique BLE MAC Address. If not, program the boards with unique BLE MAC Address.|
 | --- |
 
 Follow the steps provided in the link to [program the precompiled hex file](https://microchipdeveloper.com/ipe:programming-device) using MPLABX IPE to program the pre-compiled hex image. 
