@@ -29,6 +29,8 @@ Checkout the <a href="https://microchipsupport.force.com/s/" target="_blank">Tec
 1. [ATtiny3217 Touch Application Code](#step6)
 1. [Board Programming](#step7)
 1. [Run the demo](#step8)
+1. [Related applications](#step9)
+
 
 ## 1. Introduction<a name="step1">
 
@@ -243,3 +245,9 @@ Follow the steps provided in the link to [Build and program the application](htt
 - On Startup the WBZ451 Device will scan for nearby BLE Sensor devices and initiates connection with them. During scanning, the user LED will blink at every 500ms.
 - To switch the device between Advertising and Scanning, press the user button. During Advertising the user LED will blink at every 1000ms.
 - The E-Paper Display will show the temperature of all the connected devices every 60 seconds. 
+
+## 9. Related applications<a name="step9">
+
+- [BLE Sensor Applications](https://github.com/Microchip-MPLAB-Harmony/wireless_apps_pic32cxbz2_wbz45/tree/master/apps/ble/advanced_applications/ble_sensor)
+- [BLE Sensor with Touch(ATtiny3217)](https://github.com/MicrochipTech/PIC32CXBZ2_WBZ45x_BLE_SENSOR_Touch_ATtiny3217)
+- [BLE UART with E-PAPER Display](https://github.com/MicrochipTech/PIC32CXBZ2_WBZ45x_BLE_UART_E_PAPER_Display)
