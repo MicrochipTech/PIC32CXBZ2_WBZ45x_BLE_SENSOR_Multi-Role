@@ -215,13 +215,13 @@ void APP_TRPS_Sensor_Button_Handler(void)
 
     if(scanStart == true)
     {
-        APP_ADV_Stop();
         if(APP_GetConnectedDevice_Count() < (BLE_GAP_MAX_LINK_NBR-1) )
         {
             BLE_GAP_SetScanningEnable(false, BLE_GAP_SCAN_FD_DISABLE, BLE_GAP_SCAN_MODE_GENERAL_DISCOVERY, 0);
             result = BLE_GAP_SetScanningEnable(true, BLE_GAP_SCAN_FD_DISABLE, BLE_GAP_SCAN_MODE_GENERAL_DISCOVERY, 1800);
             if(result == APP_RES_SUCCESS )
             {
+//                BLE_GAP_SetAdvEnable(false, 0);
                 SYS_CONSOLE_PRINT("Scanning Started\r\n Device Count: %d\r\nAdv Stopped\r\n", APP_GetConnectedDevice_Count());
             }
             else
@@ -232,7 +232,8 @@ void APP_TRPS_Sensor_Button_Handler(void)
         }
         else
         {
-            SYS_CONSOLE_PRINT("Max Peripherals Connected: %d - Adv Stopped\r\n", APP_GetConnectedDevice_Count());
+            //BLE_GAP_SetScanningEnable(false, BLE_GAP_SCAN_FD_DISABLE, BLE_GAP_SCAN_MODE_GENERAL_DISCOVERY, 0);
+            SYS_CONSOLE_PRINT("Max Peripherals Connected: %d\r\n", APP_GetConnectedDevice_Count());
         }
     }
     else
@@ -241,10 +242,15 @@ void APP_TRPS_Sensor_Button_Handler(void)
         APP_TIMER_StopTimer(APP_TIMER_ADV_CTRL);
         USER_LED_Set(); 
         BLE_GAP_SetScanningEnable(false, BLE_GAP_SCAN_FD_DISABLE, BLE_GAP_SCAN_MODE_GENERAL_DISCOVERY, 0);
-        SYS_CONSOLE_PRINT("Scanning Stopped: %d - Adv Started\r\n", APP_GetConnectedDevice_Count());
+        SYS_CONSOLE_PRINT("Scanning Stopped - Adv Starting - Dev:%d\r\n", APP_GetConnectedDevice_Count());
         APP_TIMER_SetTimer(APP_TIMER_ADV_CTRL, APP_TIMER_1S, true);
-        APP_ADV_Init();
+//        APP_ADV_Init();
+//        BLE_GAP_SetAdvEnable(false, 0);
+//       vTaskDelay(500  /portTICK_PERIOD_MS);
+//        APP_SetBleState(APP_BLE_STATE_STANDBY);
+//        APP_ADV_Ctrl(true);
     }
+    APP_ADV_Init();
 //    extern void APP_TRPC_OnOffGet_cmd(void);
 //    APP_TRPC_OnOffGet_cmd();
 }

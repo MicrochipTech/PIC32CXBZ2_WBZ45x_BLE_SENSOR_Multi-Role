@@ -654,7 +654,7 @@ void APP_E_PAPER_Handler(uint8_t *msgData) {
 
             DRV_SPI_TRANSFER_SETUP setup;
 
-            setup.baudRateInHz = 20000000;
+            setup.baudRateInHz = 8000000;
             setup.clockPhase = DRV_SPI_CLOCK_PHASE_VALID_LEADING_EDGE;
             setup.clockPolarity = DRV_SPI_CLOCK_POLARITY_IDLE_LOW;
             setup.dataBits = DRV_SPI_DATA_BITS_8;

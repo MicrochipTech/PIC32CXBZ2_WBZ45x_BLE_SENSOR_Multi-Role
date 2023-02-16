@@ -146,8 +146,8 @@ void APP_mLink_Temperature_Update(uint16_t connHandle, uint16_t temperature)
     if( sensDataItem != NULL)
     {
         sensDataItem->connHandle = connHandle;
-        sensDataItem->mLinkSensorData.tempSens.lsb = (uint8_t)(temperature & 0xFF);
-        sensDataItem->mLinkSensorData.tempSens.msb = (uint8_t)(temperature>>8 & 0xFF);
+        sensDataItem->mLinkSensorData.tempSens.msb = (uint8_t)(temperature & 0xFF);
+        sensDataItem->mLinkSensorData.tempSens.lsb = (uint8_t)(temperature>>8 & 0xFF);
     }
 }
 

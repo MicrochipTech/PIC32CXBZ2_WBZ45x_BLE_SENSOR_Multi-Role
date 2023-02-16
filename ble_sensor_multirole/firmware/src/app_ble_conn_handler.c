@@ -81,6 +81,8 @@
 static APP_BLE_ConnList_T                   s_bleConnList[BLE_GAP_MAX_LINK_NBR];
 static APP_BLE_ConnList_T                   *sp_currentBleLink = NULL;
 static uint8_t peripheralDevCount = 0;
+
+extern bool scanStart;
 // *****************************************************************************
 // *****************************************************************************
 // Section: Functions
@@ -309,7 +311,15 @@ void APP_BleGapConnEvtHandler(BLE_GAP_Event_T *p_event)
 
         case BLE_GAP_EVT_ADV_REPORT:
         {
-            if(APP_CheckForServiceItemInAdvertisingString(p_event->eventField.evtAdvReport.advData,
+            if((APP_GetConnectedDevice_Count() >= (BLE_GAP_MAX_LINK_NBR-1) ))
+            {
+                scanStart = false;
+                APP_SetBleState(APP_BLE_STATE_STANDBY);
+                APP_Msg_T appMsg;
+                appMsg.msgId = APP_MSG_TRS_BLE_SENSOR_INT;
+                OSAL_QUEUE_Send(&appData.appQueue, &appMsg, 0);
+            }
+            else if(APP_CheckForServiceItemInAdvertisingString(p_event->eventField.evtAdvReport.advData,
                 p_event->eventField.evtAdvReport.length) )
             {
                 APP_Msg_T appMsg;

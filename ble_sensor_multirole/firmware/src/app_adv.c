@@ -160,12 +160,14 @@ uint16_t APP_ADV_Ctrl(uint8_t enable)
         {
             APP_SetBleState(APP_BLE_STATE_ADVERTISING);
             BLE_GAP_SetAdvEnable(false, 0);
+            vTaskDelay(1000  /portTICK_PERIOD_MS);
             result = BLE_GAP_SetAdvEnable(true, 0);
 
             if (result == APP_RES_SUCCESS)
             {
+//                BLE_GAP_SetScanningEnable(false, BLE_GAP_SCAN_FD_DISABLE, BLE_GAP_SCAN_MODE_GENERAL_DISCOVERY, 0);
                 APP_TIMER_SetTimer(APP_TIMER_ADV_CTRL, APP_TIMER_1S, true);
-                SYS_CONSOLE_PRINT("Adv Started\r\n");
+                SYS_CONSOLE_PRINT("ADV Started\r\n");
             }
             else
             {

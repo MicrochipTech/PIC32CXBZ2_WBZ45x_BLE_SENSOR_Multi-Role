@@ -119,6 +119,9 @@ uint8_t slider_table[5] = {0,0,36,109,255};
 #else
 #error "SLIDER_TABLE not defined"
 #endif
+
+extern bool scanStart;
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Callback Functions
@@ -415,10 +418,7 @@ void APP_Tasks ( void )
                         APP_Msg_T appMsg;
                         p_appMsg->msgId = APP_MSG_TRS_BLE_SENSOR_INT;
                         OSAL_QUEUE_Send(&appData.appQueue, p_appMsg, 0);
-                    }
-                    
-
-                    
+                    }                    
 //                    SYS_CONSOLE_MESSAGE("Scanning Started\r\n");
 //                    APP_TIMER_SetTimer(APP_TIMER_ADV_CTRL, APP_TIMER_500MS, true);
 //                    BLE_GAP_SetScanningEnable(true, BLE_GAP_SCAN_FD_DISABLE, BLE_GAP_SCAN_MODE_GENERAL_DISCOVERY, 1800);
@@ -448,9 +448,9 @@ void APP_Tasks ( void )
                             (p_appMsg->msgData[5] == TEMP_SENSOR_NFY) )
                     {
                         uint16_t connHandle = (uint16_t)(p_appMsg->msgData[1]<<8 | p_appMsg->msgData[0]);
-                        SYS_CONSOLE_PRINT("Temperature[0x%X]: %d.%dC\r\n", connHandle, p_appMsg->msgData[7],  p_appMsg->msgData[6] );
+                        SYS_CONSOLE_PRINT("Temperature[0x%X]: %d.%dC\r\n", connHandle, p_appMsg->msgData[7],  p_appMsg->msgData[6]/10 );
 #ifdef ENABLE_EPAPER_DISPLAY
-                        APP_mLink_Temperature_Update(connHandle, (uint16_t)(p_appMsg->msgData[7]<<8 | p_appMsg->msgData[6]));
+                        APP_mLink_Temperature_Update(connHandle, (uint16_t)(p_appMsg->msgData[6]<<8 | p_appMsg->msgData[7]));
 #endif
                     }
                     else if( (p_appMsg->msgData[3] == APP_TRP_VENDOR_OPCODE_BLE_SENSOR) && 
@@ -514,6 +514,13 @@ void APP_Tasks ( void )
                             SYS_CONSOLE_PRINT(" - Failed: 0x%X\r\n", connStatus);
                         }
                     }
+//                    else if((APP_GetConnectedDevice_Count() >= (BLE_GAP_MAX_LINK_NBR-1) ))
+//                    {
+//                        scanStart = false;
+//                        APP_SetBleState(APP_BLE_STATE_STANDBY);
+//                        p_appMsg->msgId = APP_MSG_TRS_BLE_SENSOR_INT;
+//                        OSAL_QUEUE_Send(&appData.appQueue, p_appMsg, 0);
+//                    }
                     else
                     {
                         APP_TIMER_StopTimer(APP_TIMER_ADV_CTRL);
