@@ -1,0 +1,58 @@
+{
+    "metaDataVersion": "1.0.0",
+    "category": "com.microchip.ide.project",
+    "content": {
+        "metaDataVersion": "1.3.0",
+        "name": "com.microchip.mplabx.project.PIC32CXBZ2_WBZ45x_BLE_SENSOR_Multi-Role",
+        "version": "1.0.0",
+        "displayName": "WBZ45x BLE Sensor Multi-Link Multi-Role Demo",
+        "projectName": "PIC32CXBZ2_WBZ45x_BLE_SENSOR_Multi-Role",
+        "shortDescription": "This Application demonstrates the multi-link multi-role capability of PIC32CXBZ2/WBZ45x device. The WBZ451 BLE Sensor Multi-role device acts as the central device and connects to five other WBZ451 BLE Sensor devices. The WBZ451 BLE Sensor Multi-role device also acts as peripheral device and can connect to smart phone.",
+        "ide": {
+            "name": "MPLAB X",
+            "semverRange": ">=6.00"
+        },
+        "compiler": [
+            {
+                "name": "XC32",
+                "semverRange": "^4.10.0"
+            }
+        ],
+        "dfp": {
+            "name": "PIC32CX-BZ_DFP",
+            "semverRange": "^1.0.116"
+        },
+        "configurator": {
+            "name": "MCC",
+            "semverRange": ">=5.1.17"
+        },
+        "device": {
+            "metaDataVersion": "1.0.0",
+            "category": "com.microchip.portal.contentRef",
+            "content": {
+                "metaDataVersion": "1.0.0",
+                "category": "com.microchip.device",
+                "name": " PIC32CX-BZ2",
+                "versionRange": "*"
+            }
+        },
+        "author": "Sankar Mohan",
+        "peripherals": [
+            "SERCOM"
+        ],
+        "keywords": [
+             "IoT","BLE","Capacitive Touch","MPLAB X","XC32","PTC","SERCOM","MCC","Wireless","Development Tool","Bluetooth","Display","SPI"
+        ],
+        "additionalData": {
+            "longDescription": {
+                "metaDataVersion": "1.0.0",
+                "category": "com.microchip.portal.fileRef",
+                "content": {
+                    "metaDataVersion": "1.0.0",
+                    "fileName": "./README.md",
+                    "mimeType": "text/markdown"
+                }
+            }
+        }
+    }
+}
