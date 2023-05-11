@@ -1,9 +1,9 @@
-# WBZ45x BLE Sensor Multi-Link Multi-Role Demo
+# PIC32CXBZ2_WBZ45x BLE Sensor Multi-Link Multi-Role Demo
 
 <img src="docs/IoT-Made-Easy-Logo.png" width=100>
 
 
-> "Wireless Made Easy!" 
+> "IoT Made Easy!" 
 
 Devices: **| PIC32CXBZ2 | WBZ45x | ATtiny3217 Xplained Pro |**<br>
 Features: **| BLE | TOUCH | E-PAPER |**
