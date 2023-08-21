@@ -555,8 +555,7 @@ void APP_Tasks ( void )
                     
                     sensorData = APP_TRPS_Get_SensorData();
                     sensTemperature = (uint16_t)(sensorData->tempSens.msb<<8 | sensorData->tempSens.lsb);
-                    sprintf((char *)print_buff, (const char *)"Self:  %d.%dC\0",
-                                        sensTemperature/10, sensTemperature%10);
+                    sprintf((char *)print_buff, (const char *)"Self:  %d.%dC\0", sensTemperature/10, sensTemperature%10);
                     LCD_PRINT(0, 2, print_buff);
                     
                     for (uint8_t i = 0; i < BLE_GAP_MAX_LINK_NBR-1; i++)
@@ -570,11 +569,10 @@ void APP_Tasks ( void )
                             remoteSensorDataItem = APP_mLink_GetSensDataByConnHandle(connHandle);
                             if(remoteSensorDataItem != NULL)
                             {
-                                sprintf((char *)print_buff, (const char *)"Dev%d:  %d.%dC\0", i+1, 
-                                        remoteSensorDataItem->mLinkSensorData.tempSens.msb,remoteSensorDataItem->mLinkSensorData.tempSens.lsb);
+                                sensTemperature = (uint16_t)(remoteSensorDataItem->mLinkSensorData.tempSens.lsb<<8 | remoteSensorDataItem->mLinkSensorData.tempSens.msb);
+                                sprintf((char *)print_buff, (const char *)"Dev%d:  %d.%dC\0", i+1, sensTemperature/10, sensTemperature%10);
                                 LCD_PRINT(0, i+3, print_buff);
-                                SYS_CONSOLE_PRINT("Temp [0x%X]: %d.%dC\r\n", connHandle,
-                                        remoteSensorDataItem->mLinkSensorData.tempSens.msb,remoteSensorDataItem->mLinkSensorData.tempSens.lsb);
+                                SYS_CONSOLE_PRINT("Temp [0x%X]: %d.%dC\r\n", connHandle, remoteSensorDataItem->mLinkSensorData.tempSens.msb,remoteSensorDataItem->mLinkSensorData.tempSens.lsb);
                             }
                             else
                             {
